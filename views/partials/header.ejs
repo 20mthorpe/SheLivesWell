@@ -5,12 +5,12 @@
         <a href="/register">Register</a>
         <a href="/">Home</a>
     </span>
-    <div id="tools">
-        <%  if (locals.loggedin) {%>
-            <a href="/account">Welcome <%= locals.accountData.account_firstname %>!</a>
+    <!-- <div id="tools">
+        <%#  if (locals.loggedin) {%>
+            <a href="/account">Welcome <%# locals.accountData.account_firstname %>!</a>
             <a title="Click to log out" href="/account/logout">Log Out</a>
-          <%} else { %>
+          <%#} else { %>
             <a title="Click to log in" href="/account/login">Login</a>
-          <% } %>
-    </div>
+          <%# } %>
+    </div> -->
 </header>
