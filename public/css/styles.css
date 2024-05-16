@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap');
 
+/* GENERAL CSS */
+
 :root {
     --light-pink: #FFB0C8;
     --pink: #EE7896;
@@ -22,9 +24,147 @@
     font-style: normal;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+
+}
+
 * {
     box-sizing: border-box;
 }
+
+/* HEADER STYLING */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-pink);
+    padding: 10px 20px;
+    font-family: var(--heading-font);
+}
+
+header h1 {
+    color: var(--dark-pink);
+    font-size: 2em;
+}
+
+header span {
+    display: flex;
+    align-items: center;
+}
+
+header span a {
+    text-decoration: none;
+    color: var(--med-pink);
+    margin: 0 10px;
+    font-family: var(--body-font);
+    font-size: 1em;
+}
+
+header span a:hover {
+    color: var(--dark-pink);
+}
+
+header span img {
+    width: 100px;
+    height: auto;
+    margin-left: 15px;
+}
+
+/* NAVIGATION STYLING */
+
+nav {
+    background-color: var(--light-pink);
+    font-family: var(--body-font);
+    border-bottom: 2px solid var(--med-pink);
+    border-top: 2px solid var(--med-pink);
+}
+
+nav ul li:hover {
+    background-color: white;
+    color: var(--dark-pink);
+    border-radius: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--dark-pink);
+    padding: 10px 15px;
+}
+
+.menu-icon {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* MEDIA STYLING */
+
+@media (max-width: 1000px) {
+
+    /* NAV */
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul.show {
+        display: flex;
+    }
+
+    .menu-icon {
+        display: block;
+        color: var(--dark-pink);
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        border-top: 1px solid var(--med-pink);
+    }
+    /* HEADER */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    header span {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header span a {
+        margin: 5px 0;
+    }
+
+    header span img {
+        margin: 10px 0 0 0;
+    }
+}
+
+/* HOME PAGE STYLING */
 
 body {
     font-family: var(--body-font);
@@ -34,4 +174,92 @@ body {
     background-color: var(--light-pink);
     margin: 0;
     padding: 0;
+}
+
+.wellness-section {
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.wellness-section img {
+    max-width: 10%;
+    border-radius: 15px;
+
+}
+
+h2.dropdown-toggle {
+    font-family: var(--heading-font);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+h2.dropdown-toggle:after {
+    content: '▼';
+    font-size: 1rem;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+h2.dropdown-toggle.active:after {
+    transform: rotate(-180deg);
+}
+
+.section-icon img {
+    max-width: 50%;
+    border-radius: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    margin-top: 20px;
+}
+
+.dropdown-content img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.dropdown-content p {
+    margin-top: 15px;
+}
+
+#landing-img {
+    width: 100%;
+    height: auto;
+    /* border-radius: 15px; */
+}
+
+/* FOOTER STYLING */
+footer {
+    background-color: var(--dark-pink);
+    color: var(--light-pink);
+    padding: 20px;
+    text-align: center;
+    font-family: var(--body-font);
+    border-top: 4px solid var(--med-pink);
+}
+
+footer p {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+footer a {
+    color: var(--light-pink);
+    text-decoration: none;
+    margin: 10px 0;
+    display: block;
+    font-size: 1em;
+}
+
+footer a:hover {
+    color: var(--pink);
 }

@@ -1,11 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var toggles = document.querySelectorAll(".dropdown-toggle");
-    toggles.forEach(function(toggle) {
+    const toggles = document.querySelectorAll(".dropdown-toggle");
+
+    toggles.forEach(toggle => {
         toggle.addEventListener("click", function() {
-            var content = this.nextElementSibling;
-            content.classList.toggle("show");
+            const content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                this.classList.remove("active");
+            } else {
+                content.style.display = "block";
+                this.classList.add("active");
+            }
         });
     });
 });
-
-console.log("dropdown.js loaded")
