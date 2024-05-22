@@ -1,0 +1,29 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/');
+} %>
+
+<%# messages() %>
+
+<% if (errors) { %>
+    <ul>
+        <% errors.forEach(function(error) { %>
+            <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<form action="/account/login" method="post" class="form" id="loginForm">
+    <div>
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="account_username" value="<%= locals.username %>" required>
+    </div>
+    <div>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="account_password" required>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
