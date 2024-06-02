@@ -4,6 +4,7 @@ const util = require('../utilities');
 const router = new express.Router();
 const accountController = require('../controllers/accountController');
 
+router.get('/', util.handleErrors(accountController.buildAccount));
 //router.get('/', util.checkLogin, util.handleErrors(accountController.buildAccount));
 
 router.get('/login', util.handleErrors(accountController.buildLogin));
@@ -24,7 +25,6 @@ router.get('/register', util.handleErrors(accountController.buildRegistration));
 //     util.handleErrors(accountController.processRegistration)
 // );
 
-router.get('/account', util.handleErrors(accountController.buildAccount));
 
 
 router.get('/edit', util.handleErrors(accountController.buildEditAccount));
