@@ -263,3 +263,110 @@ footer a {
 footer a:hover {
     color: var(--pink);
 }
+
+/* FORM STYLING */
+
+/* FORM STYLING */
+
+.form {
+    background-color: white;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    font-family: var(--body-font);
+    color: var(--dark-pink);
+}
+
+.form div {
+    margin-bottom: 15px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid var(--med-pink);
+    border-radius: 5px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+}
+
+.form button {
+    background-color: var(--pink);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.form button:hover {
+    background-color: var(--dark-pink);
+}
+
+/* MEDIA QUERY FOR FORM */
+@media (max-width: 600px) {
+    .form {
+        padding: 15px;
+    }
+
+    .form div {
+        margin-bottom: 10px;
+    }
+
+    .form input {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .form button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* LOGIN PROMPT STYLING */
+
+.login-prompt {
+    text-align: center;
+    margin-top: 20px;
+    font-family: var(--body-font);
+}
+
+.login-prompt p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: var(--dark-pink);
+}
+
+.login-prompt a {
+    color: var(--pink);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.login-prompt a:hover {
+    color: var(--dark-pink);
+}
+
+/* MEDIA QUERY FOR LOGIN PROMPT */
+@media (max-width: 600px) {
+    .login-prompt p,
+    .login-prompt a {
+        font-size: 0.9rem;
+    }
+}
