@@ -19,6 +19,7 @@ const session = require("express-session")
 const expressLayouts = require("express-ejs-layouts")
 
 const accountRoute = require('./routes/accountRoute')
+const wellnessRoute = require('./routes/wellnessRoute')
 const utilities = require('./utilities')
 
 
@@ -46,6 +47,9 @@ app.get('/', baseController.buildHome);
 
 // account routes
 app.use("/account", utilities.handleErrors(accountRoute));
+
+// wellness routes
+app.use("/wellness", utilities.handleErrors(wellnessRoute));
 
 // file not found route
 app.use(async (req, res, next) =>{

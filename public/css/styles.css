@@ -110,7 +110,7 @@ nav ul li a {
 
 /* MEDIA STYLING */
 
-@media (max-width: 1000px) {
+@media (max-width: 500px) {
 
     /* NAV */
     nav ul {
@@ -183,13 +183,15 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.wellness-section img {
+/* .wellness-section img {
     max-width: 10%;
     border-radius: 15px;
 
-}
+} */
 
 h2.dropdown-toggle {
     font-family: var(--heading-font);
@@ -212,14 +214,18 @@ h2.dropdown-toggle.active:after {
     transform: rotate(-180deg);
 }
 
-.section-icon img {
-    max-width: 50%;
+.section-icon {
+    width: 85px;
+    height: auto;
     border-radius: 15px;
+    
 }
 
 .dropdown-content {
     display: none;
     margin-top: 20px;
+    margin-left: 20px;
+
 }
 
 .dropdown-content img {
@@ -316,7 +322,7 @@ footer a:hover {
 }
 
 /* MEDIA QUERY FOR FORM */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .form {
         padding: 15px;
     }
@@ -364,7 +370,7 @@ footer a:hover {
 }
 
 /* MEDIA QUERY FOR LOGIN PROMPT */
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .login-prompt p,
     .login-prompt a {
         font-size: 0.9rem;
