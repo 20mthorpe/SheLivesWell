@@ -5,6 +5,7 @@
 
 const express = require('express');
 const dotenv = require('dotenv');
+const mongodb = require('./database/connect');
 //const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -56,6 +57,29 @@ app.use(async (req, res, next) =>{
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
 
+/* ***********************
+* Local Server Information
+* Values from .env (environment) file
+*************************/
+
+const port = process.env.PORT;
+const host = process.env.HOST;
+
+
+/* ***********************
+* Initialize Wellness DB and Server
+*************************/
+mongodb.initDb((err, db) => {
+  if (err) {
+    console.log(err);
+    process.exit(1);
+  } else {
+    app.listen(port);
+    console.log(`Server listening on port ${port}`);
+  }
+}
+);
+
 
 /* ***********************
 * Express Error Handlers
@@ -87,16 +111,8 @@ app.use(async(err, req, res, next) => {
 
 
 /* ***********************
-* Local Server Information
-* Values from .env (environment) file
-*************************/
-
-const port = process.env.PORT;
-const host = process.env.HOST;
-
-/* ***********************
  * Log statement to confirm server operation
  *************************/
-app.listen(port, () => {
-    console.log(`app listening on ${host}:${port}`)
-  })
+// app.listen(port, () => {
+//     console.log(`app listening on ${host}:${port}`)
+//   })

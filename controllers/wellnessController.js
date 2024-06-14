@@ -1,6 +1,17 @@
+const mongodb = require('../database/connect.js');
+const ObjectId = require('mongodb').ObjectId;
+//const db = mongodb.getDb();
+
 const util = require('../utilities');
 const wellnessController = {}
 //const wellnessModel = require('../models/wellnessModel');
+
+
+/* ***********************
+BUILD WELLNESS PAGES
+
+These functions render the wellness pages.
+*************************/
 
 wellnessController.buildWellness = async function(req, res){
     let nav = await util.getNav();
@@ -63,6 +74,27 @@ wellnessController.buildFinancial = async function(req, res){
         nav,
         errors: null
      });
+}
+
+/* ***********************
+WELLNESS API REQUESTS
+
+These functions handle the API requests for the wellness database.
+*************************/
+
+/* GET all wellness data */
+wellnessController.getWellness = async function(req, res, next){
+    //let wellness = await wellnessModel.getWellness();
+    //res.json(wellness);
+    try{
+        const db = mongodb.getDb();
+        const result = await db.db().collection('wellness').find().toArray();
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('error getting wellness data');
+    }
 }
 
 module.exports = wellnessController;
