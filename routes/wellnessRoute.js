@@ -21,8 +21,35 @@ router.get('/intellectual', util.handleErrors(wellnessController.buildIntellectu
 router.get('/financial', util.handleErrors(wellnessController.buildFinancial));
 
 /* API routes */
+
+// Get all wellness data
 router.get('/wellnessdata',
     util.handleErrors(wellnessController.getWellness)
 );
+
+// Get wellness data by id
+router.get('/wellnessdata/:id',
+    util.handleErrors(wellnessController.getWellnessById)
+);
+
+// Get wellness data by category
+router.get('/wellnessdata/:category',
+    util.handleErrors(wellnessController.getWellnessByCategory)
+);
+
+// // Post (add new) wellness data
+// router.post('/wellnessdata',
+//     util.handleErrors(wellnessController.postWellness)
+// );
+
+// // Put (update) wellness data
+// router.put('/wellnessdata/:id',
+//     util.handleErrors(wellnessController.putWellness)
+// );
+
+// // Delete wellness data
+// router.delete('/wellnessdata/:id',
+//     util.handleErrors(wellnessController.deleteWellness)
+// );
 
 module.exports = router;

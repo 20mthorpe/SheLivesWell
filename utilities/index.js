@@ -8,14 +8,24 @@ require('dotenv').config();
 const utilities = {}
 
 utilities.getNav = async function(){
-    return [
-        {name: "Home", link: "/"},
-        {name: "About", link: "/about"},
-        {name: "Contact", link: "/contact"},
-        {name: "Login", link: "/login"},
-        {name: "Register", link: "/register"},
-        {name: "Account", link: "/account"}
-    ]
+    let list = "<ul>"
+    list += "<li><a href='/'>Home</a></li>"
+    list += "<li><a href='/physical'>Physical</a></li>"
+    list += "<li><a href='/emotional'>Emotional</a></li>"
+    list += "<li><a href='/social'>Social</a></li>"
+    list += "<li><a href='/spiritual'>Spiritual</a></li>"
+    list += "<li><a href='/financial'>Financial</a></li>"
+    list += "<li><a href='/intellectual'>Intellectual</a></li>"
+    list += "</ul>"
+    return list;
+    // return [
+    //     {name: "Home", link: "/"},
+    //     {name: "Physical", link: "/physical"},
+    //     {name: "Emotional", link: "/emotional"},
+    //     {name: "Social", link: "/social"},
+    //     {name: "Spiritual", link: "/spiritual"},
+    //     {name: "Financial", link: "/financial"}
+    // ]
 }
 
 /* ***********************
