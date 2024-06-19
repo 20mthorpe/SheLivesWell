@@ -41,6 +41,7 @@ utilities.buildMediaGrid = function(mediaArray){
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
+            grid += `<h3>${media.title}</h3>`;
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
