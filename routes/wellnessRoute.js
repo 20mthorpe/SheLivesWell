@@ -6,19 +6,21 @@ const wellnessController = require('../controllers/wellnessController');
 
 
 /* Routes for site pages */
-router.get('/', util.handleErrors(wellnessController.buildWellness));
 
-router.get('/social', util.handleErrors(wellnessController.buildSocial));
+router.get('/:category', util.handleErrors(wellnessController.buildWellness));
+//router.get('/', util.handleErrors(wellnessController.buildWellness));
 
-router.get('/physical', util.handleErrors(wellnessController.buildPhysical));
+// router.get('/social', util.handleErrors(wellnessController.buildSocial));
 
-router.get('/emotional', util.handleErrors(wellnessController.buildEmotional));
+// router.get('/physical', util.handleErrors(wellnessController.buildPhysical));
 
-router.get('/spiritual', util.handleErrors(wellnessController.buildSpiritual));
+// router.get('/emotional', util.handleErrors(wellnessController.buildEmotional));
 
-router.get('/intellectual', util.handleErrors(wellnessController.buildIntellectual));
+// router.get('/spiritual', util.handleErrors(wellnessController.buildSpiritual));
 
-router.get('/financial', util.handleErrors(wellnessController.buildFinancial));
+// router.get('/intellectual', util.handleErrors(wellnessController.buildIntellectual));
+
+// router.get('/financial', util.handleErrors(wellnessController.buildFinancial));
 
 /* API routes */
 

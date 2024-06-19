@@ -4,7 +4,8 @@ const ObjectId = require('mongodb').ObjectId;
 
 const util = require('../utilities');
 const wellnessController = {}
-//const wellnessModel = require('../models/wellnessModel');
+
+const wellnessModel = require('../models/wellnessModel');
 
 
 /* ***********************
@@ -15,10 +16,17 @@ These functions render the wellness pages.
 
 wellnessController.buildWellness = async function(req, res){
     let nav = await util.getNav();
+    const category = req.params.category;
+    //console.log('category: ' + req.params.category)
+    const category_data = await wellnessModel.getWellnessByCategory(category);
+    //console.log(category_data)
+    const grid = util.buildMediaGrid(category_data);
+
     res.render('wellness/', { 
-        title: 'Wellness',
+        title: category + ' wellness',
         nav,
-        errors: null
+        errors: null,
+        grid,
      });
 }
 
@@ -76,90 +84,90 @@ wellnessController.buildFinancial = async function(req, res){
      });
 }
 
-/* ***********************
-WELLNESS API REQUESTS
+// /* ***********************
+// WELLNESS API REQUESTS
 
-These functions handle the API requests for the wellness database.
-*************************/
+// These functions handle the API requests for the wellness database.
+// *************************/
 
-/* GET all wellness data */
-wellnessController.getWellness = async function(req, res, next){
-    //let wellness = await wellnessModel.getWellness();
-    //res.json(wellness);
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('wellness').find().toArray();
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('error getting wellness data');
-    }
-}
-
-/* GET wellness data by category */
-wellnessController.getWellnessByCategory = async function(req, res, next){
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('wellness').find({category: req.params.category}).toArray();
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('error getting wellness data');
-    }
-}
-
-/* GET wellness data by ID */
-wellnessController.getWellnessById = async function(req, res, next){
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('wellness').findOne({_id: ObjectId(req.params.id)});
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('error getting wellness data');
-    }
-}
-
-// /* POST new wellness data */
-// wellnessController.postWellness = async function(req, res, next){
+// /* GET all wellness data */
+// wellnessController.getWellness = async function(req, res, next){
+//     //let wellness = await wellnessModel.getWellness();
+//     //res.json(wellness);
 //     try{
 //         const db = mongodb.getDb();
-//         const result = await db.db().collection('wellness').insertOne(req.body);
+//         const result = await db.db().collection('wellness').find().toArray();
 //         res.setHeader('Content-Type', 'application/json');
 //         res.status(200).json(result);
 //     } catch (err) {
 //         console.log(err);
-//         res.status(500).send('error posting wellness data');
+//         res.status(500).send('error getting wellness data');
 //     }
 // }
 
-// /* PUT updated wellness data */
-// wellnessController.putWellness = async function(req, res, next){
+// /* GET wellness data by category */
+// wellnessController.getWellnessByCategory = async function(req, res, next){
 //     try{
 //         const db = mongodb.getDb();
-//         const result = await db.db().collection('wellness').updateOne({_id: ObjectId(req.params.id)}, {$set: req.body});
+//         const result = await db.db().collection('wellness').find({category: req.params.category}).toArray();
 //         res.setHeader('Content-Type', 'application/json');
 //         res.status(200).json(result);
 //     } catch (err) {
 //         console.log(err);
-//         res.status(500).send('error updating wellness data');
+//         res.status(500).send('error getting wellness data');
 //     }
 // }
 
-// /* DELETE wellness data */
-// wellnessController.deleteWellness = async function(req, res, next){
+// /* GET wellness data by ID */
+// wellnessController.getWellnessById = async function(req, res, next){
 //     try{
 //         const db = mongodb.getDb();
-//         const result = await db.db().collection('wellness').deleteOne({_id: ObjectId(req.params.id)});
+//         const result = await db.db().collection('wellness').findOne({_id: ObjectId(req.params.id)});
 //         res.setHeader('Content-Type', 'application/json');
 //         res.status(200).json(result);
 //     } catch (err) {
 //         console.log(err);
-//         res.status(500).send('error deleting wellness data');
+//         res.status(500).send('error getting wellness data');
 //     }
 // }
+
+// // /* POST new wellness data */
+// // wellnessController.postWellness = async function(req, res, next){
+// //     try{
+// //         const db = mongodb.getDb();
+// //         const result = await db.db().collection('wellness').insertOne(req.body);
+// //         res.setHeader('Content-Type', 'application/json');
+// //         res.status(200).json(result);
+// //     } catch (err) {
+// //         console.log(err);
+// //         res.status(500).send('error posting wellness data');
+// //     }
+// // }
+
+// // /* PUT updated wellness data */
+// // wellnessController.putWellness = async function(req, res, next){
+// //     try{
+// //         const db = mongodb.getDb();
+// //         const result = await db.db().collection('wellness').updateOne({_id: ObjectId(req.params.id)}, {$set: req.body});
+// //         res.setHeader('Content-Type', 'application/json');
+// //         res.status(200).json(result);
+// //     } catch (err) {
+// //         console.log(err);
+// //         res.status(500).send('error updating wellness data');
+// //     }
+// // }
+
+// // /* DELETE wellness data */
+// // wellnessController.deleteWellness = async function(req, res, next){
+// //     try{
+// //         const db = mongodb.getDb();
+// //         const result = await db.db().collection('wellness').deleteOne({_id: ObjectId(req.params.id)});
+// //         res.setHeader('Content-Type', 'application/json');
+// //         res.status(200).json(result);
+// //     } catch (err) {
+// //         console.log(err);
+// //         res.status(500).send('error deleting wellness data');
+// //     }
+// // }
 
 module.exports = wellnessController;
