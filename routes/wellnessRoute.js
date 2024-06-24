@@ -8,6 +8,8 @@ const wellnessController = require('../controllers/wellnessController');
 /* Routes for site pages */
 
 router.get('/:category', util.handleErrors(wellnessController.buildWellness));
+
+
 //router.get('/', util.handleErrors(wellnessController.buildWellness));
 
 // router.get('/social', util.handleErrors(wellnessController.buildSocial));
