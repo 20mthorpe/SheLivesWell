@@ -9,6 +9,9 @@ const mongodb = require('./database/connect');
 //const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const { auth } = require('express-openid-connect');
+const config = require('./config/authconfig');
+
 const baseController = require('./controllers/baseController');
 
 const app = express();
@@ -24,11 +27,14 @@ const wellnessRoute = require('./routes/wellnessRoute')
 const utilities = require('./utilities')
 
 
+
 /* ***********************
 * Middleware
 *************************/
 app.use(static);
 
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
 
 /* ***********************
 * Configuration (view engine and templates)
