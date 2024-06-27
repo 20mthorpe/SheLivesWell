@@ -1,7 +1,7 @@
 const util = require('../utilities/');
 //const accountModel = require('../models/accountModel');
 const accountController = {}
-//const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 //const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -43,7 +43,11 @@ accountController.buildRegistration = async function(req, res){
 /* ***********************
 Process the registration form
 *************************/
+accountController.registerAccount = async function(req, res){
+    let nav = await util.getNav();
+    const { fname, lname, username, email, password } = req.body;
 
+}
 
 /* ***********************
 Deliver the account view
