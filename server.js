@@ -22,12 +22,16 @@ const expressLayouts = require("express-ejs-layouts")
 const accountRoute = require('./routes/accountRoute')
 const wellnessRoute = require('./routes/wellnessRoute')
 const utilities = require('./utilities')
+const flash = require('connect-flash');
 
 
 /* ***********************
 * Middleware
 *************************/
 app.use(static);
+app.use(express.json())
+app.use(flash())
+app.use(express.urlencoded({ extended: true }));
 
 
 /* ***********************

@@ -7,7 +7,7 @@
 <%# messages() %>
 
 <% if (errors) { %>
-    <ul>
+    <ul class="notice">
         <% errors.forEach(function(error) { %>
             <li><%= error.msg %></li>
         <% }); %>
@@ -27,3 +27,7 @@
         <button type="submit">Login</button>
     </div>
 </form>
+<div class="login-prompt">
+    <p>Don't have an account?</p>
+    <a href="/account/register">Register Here</a>
+</div>

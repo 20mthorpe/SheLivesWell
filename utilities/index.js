@@ -54,6 +54,8 @@ utilities.buildMediaGrid = function(mediaArray){
                 grid += `<a href='${media.link}' </a>`;
             } else if (media.mediaType === "website") {
                 grid += `<a href='${media.link}' </a>`;
+            } else if (media.mediaType === "app") {
+                grid += `<a href='${media.link}' </a>`;
             } else {
                 grid += `<p>Invalid media type</p>`;
             }

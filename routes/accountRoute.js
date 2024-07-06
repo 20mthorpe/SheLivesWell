@@ -18,12 +18,12 @@ router.get('/login', util.handleErrors(accountController.buildLogin));
 router.get('/logout', util.handleErrors(accountController.processLogout));
 
 router.get('/register', util.handleErrors(accountController.buildRegistration));
-// router.post(
-//     '/register', 
+router.post(
+     '/register', 
 //     accountValidation.registrationRules(),
 //     accountValidation.checkRegistrationData,
-//     util.handleErrors(accountController.processRegistration)
-// );
+     util.handleErrors(accountController.registerAccount)
+);
 
 
 
@@ -34,6 +34,7 @@ router.get('/edit', util.handleErrors(accountController.buildEditAccount));
 //     accountValidation.checkEditData,
 //     util.handleErrors(accountController.processEditAccount)
 // );
+
 
 
 module.exports = router;

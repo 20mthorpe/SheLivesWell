@@ -7,7 +7,7 @@
 <%# messages() %>
 
 <% if (errors) { %>
-    <ul>
+    <ul class="notice">
         <% errors.forEach(function(error) { %>
             <li><%= error.msg %></li>
         <% }); %>
@@ -17,25 +17,25 @@
 <form class="form" action="/account/register" method="post">
     <div>
         <label for="fname">First Name: </label>
-        <input type="text" id="fname" name="account_fname" value="<%# locals.fname %>" required>
+        <input type="text" id="fname" name="fname" value="<%= locals.fname %>" required>
         <label for="lname">Last Name: </label>
-        <input type="text" id="lname" name="account_lname" value="<%# locals.lname %>" required>
+        <input type="text" id="lname" name="lname" value="<%= locals.lname %>" required>
     </div>
     <div>
         <label for="email">Email: </label>
-        <input type="email" id="email" name="account_email" value="<%# locals.email %>" required>
+        <input type="email" id="email" name="email" value="<%= locals.email %>" required>
     </div>
     <div>
         <label for="username">Username: </label>
-        <input type="text" id="username" name="account_username" value="<%# locals.username %>" required>
+        <input type="text" id="username" name="username" value="<%= locals.username %>" required>
     </div>
     <div>
         <label for="password">Password: </label>
-        <input type="password" id="password" name="account_password" required>
+        <input type="password" id="password" name="password" required>
     </div>
     <div>
         <label for="password2">Confirm Password: </label>
-        <input type="password" id="password2" name="account_password2" required>
+        <input type="password" id="password2" name="password2" required>
     </div>
     <div>
         <button type="submit">Register</button>
