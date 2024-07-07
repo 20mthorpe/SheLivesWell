@@ -8,12 +8,13 @@ router.get('/', util.handleErrors(accountController.buildAccount));
 //router.get('/', util.checkLogin, util.handleErrors(accountController.buildAccount));
 
 router.get('/login', util.handleErrors(accountController.buildLogin));
-// router.post(
-//     '/login', 
+
+router.post(
+    '/login', 
 //     accountValidation.loginRules(),
 //     accountValidation.checkLoginData,
-//     util.handleErrors(accountController.processLogin)
-// );
+    util.handleErrors(accountController.processLogin)
+);
 
 router.get('/logout', util.handleErrors(accountController.processLogout));
 

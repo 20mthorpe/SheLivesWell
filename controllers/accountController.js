@@ -1,9 +1,9 @@
 const util = require('../utilities/');
-//const accountModel = require('../models/accountModel');
+const accountModel = require('../models/accountModel');
 const accountController = {}
 const bcrypt = require('bcryptjs');
-const session = require('express-session');
-const flash = require('connect-flash');
+//const session = require('express-session');
+//const flash = require('connect-flash');
 //const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -24,7 +24,44 @@ accountController.buildLogin = async function(req, res){
 /* ***********************
 Process the login form
 *************************/
+accountController.processLogin = async function(req, res){
+    let nav = await util.getNav();
+    const { username, password } = req.body;
+    const user = await accountModel.findUser(username);
+    if(!user){
+        req.flash("error", "Username not found. Please try again.")
+        return res.status(401).render('account/login', {
+            title: 'Login',
+            nav,
+            errors: "Username not found. Please try again."
+        })
+    }
+    try {
+        if(await bcrypt.compare(password, user.password_hash)){
+            delete user.password;
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 3600 * 1000});
+            if(process.env.NODE_ENV === 'development'){
+                res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000});
+            } else {
+                res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000, secure: true});
+            }
+            return res.redirect('/account/');
 
+            // req.session.user = user;
+            // req.flash("notice", `Welcome back, ${user.fname}!`)
+            // return res.status(200).redirect('/');
+        } else {
+            req.flash("error", "Invalid username or password. Please try again.")
+            return res.status(401).render('account/login', {
+                title: 'Login',
+                nav,
+                errors: "Invalid username or password. Please try again."
+            })
+        }
+    } catch (err) {
+        return new Error('Error logging in');
+    }
+}
 
 /* ***********************
 Process the logout
@@ -47,9 +84,20 @@ Process the registration form
 *************************/
 accountController.registerAccount = async function(req, res){
     let nav = await util.getNav();
-    let user;
-    console.log(req.body);
+    //let user;
+    //console.log(req.body);
     const { fname, lname, username, email, password } = req.body;
+    
+    const userEmailExists = await accountModel.findUserByEmail(email)
+
+    if(userEmailExists){
+        req.flash("error", "Email already exists. Please try again.")
+        return res.status(501).render('account/register', {
+            title: 'Registration',
+            nav,
+            errors: "Email already exists. Please try again."
+        })
+    }
 
     let hashedPassword
     try {
@@ -59,10 +107,10 @@ accountController.registerAccount = async function(req, res){
         return res.status(500).redirect('/account/register', {
             title: 'Register',
             nav,
-            errors: null,
+            errors: 'Error hashing password',
         });
     }
-    user = {
+    const user = {
         fname: fname,
         lname: lname,
         username: username,
@@ -72,8 +120,10 @@ accountController.registerAccount = async function(req, res){
     };
 
     try {
+        console.log(`user fname: ${user.fname}`);
 
-        const regResult = await accountModel.registerAccount(user)
+        const regResult = await accountModel.registerUser(user)
+
         
         if (regResult){
             req.flash(

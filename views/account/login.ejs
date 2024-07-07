@@ -6,11 +6,23 @@
 
 <%# messages() %>
 
+<%# if (errors) { %>
+    <!-- <ul class="notice"> -->
+        <%# errors.forEach(function(error) { %>
+            <!-- <li><%# error.msg %></li> -->
+        <%# }); %>
+    <!-- </ul> -->
+<%# } %>
+
 <% if (errors) { %>
     <ul class="notice">
-        <% errors.forEach(function(error) { %>
-            <li><%= error.msg %></li>
-        <% }); %>
+        <% if (Array.isArray(errors)) { %>
+            <% errors.forEach(function(error) { %>
+                <li><%= error.msg %></li>
+            <% }); %>
+        <% } else { %>
+            <li><%= errors %></li>
+        <% } %>
     </ul>
 <% } %>
 

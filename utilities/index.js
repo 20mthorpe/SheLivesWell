@@ -46,16 +46,16 @@ utilities.buildMediaGrid = function(mediaArray){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
                 grid += `<video src='${media.link}' controls></video>`;
-            } else if (media.mediaType === "audio"){
-                grid += `<audio src='${media.link}' controls></audio>`;
-            } else if (media.mediaType === "document"){
-                grid += `<a href='${media.link}' </a>`;
-            } else if (media.mediaType === "link"){
-                grid += `<a href='${media.link}' </a>`;
+            // } else if (media.mediaType === "audio"){
+            //     grid += `<audio src='${media.link}' controls></audio>`;
+            // } else if (media.mediaType === "document"){
+            //     grid += `<a href='${media.link}'></a>`;
+            // } else if (media.mediaType === "link"){
+            //     grid += `<a href='${media.link}'></a>`;
             } else if (media.mediaType === "website") {
-                grid += `<a href='${media.link}' </a>`;
-            } else if (media.mediaType === "app") {
-                grid += `<a href='${media.link}' </a>`;
+                grid += `<a href="${media.link}" target="_blank"></a>`;
+            // } else if (media.mediaType === "app") {
+            //     grid += `<a href='${media.link}' </a>`;
             } else {
                 grid += `<p>Invalid media type</p>`;
             }
