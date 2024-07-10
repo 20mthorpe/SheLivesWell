@@ -45,7 +45,13 @@ utilities.buildMediaGrid = function(mediaArray){
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
-                grid += `<video src='${media.link}' controls></video>`;
+                grid += `<a href='${media.link}' target="_blank">${media.title}</a>`
+                //grid += `<iframe src="${media.link}" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+                //grid += `<video src='${media.link}' controls></video>`;
+                console.log(media)
+                if (media.embedLink){
+                    grid += `<iframe src="${media.embedLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+                }
             // } else if (media.mediaType === "audio"){
             //     grid += `<audio src='${media.link}' controls></audio>`;
             // } else if (media.mediaType === "document"){
