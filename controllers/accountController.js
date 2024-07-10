@@ -4,7 +4,7 @@ const accountController = {}
 const bcrypt = require('bcryptjs');
 //const session = require('express-session');
 //const flash = require('connect-flash');
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -27,29 +27,42 @@ Process the login form
 accountController.processLogin = async function(req, res){
     let nav = await util.getNav();
     const { username, password } = req.body;
-    const user = await accountModel.findUser(username);
-    if(!user){
-        req.flash("error", "Username not found. Please try again.")
-        return res.status(401).render('account/login', {
-            title: 'Login',
-            nav,
-            errors: "Username not found. Please try again."
-        })
-    }
+    //console.log(`username: ${username}`);
     try {
-        if(await bcrypt.compare(password, user.password_hash)){
-            delete user.password;
+        const user = await accountModel.findUser(username);
+        if(!user){
+            req.flash("error", "Username not found. Please try again.")
+            return res.status(401).render('account/login', {
+                title: 'Login',
+                nav,
+                errors: "Username not found. Please try again."
+            })
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password_hash);
+        if(passwordMatch){
+            //delete user.password;
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: 3600 * 1000});
-            if(process.env.NODE_ENV === 'development'){
-                res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000});
-            } else {
-                res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000, secure: true});
-            }
-            return res.redirect('/account/');
+            //console.log(`user password: ${user.password_hash}`)
+            const cookieOptions = {
+                httpOnly: true,
+                maxAge: 3600 * 1000,
+            };
 
-            // req.session.user = user;
-            // req.flash("notice", `Welcome back, ${user.fname}!`)
-            // return res.status(200).redirect('/');
+            if(process.env.NODE_ENV !== 'development'){
+                cookieOptions.secure = true;
+            }
+            res.cookie('jwt', accessToken, cookieOptions);
+            return res.render('account/', {
+                title: 'Account',
+                nav,
+                user: user,
+                errors: null
+            });
+            //console.log("I got through to this code!")
+            //req.session.user = user;
+            //req.flash("notice", `Welcome back, ${user.fname}!`)
+            //return res.status(200).redirect('account/index.ejs');
+
         } else {
             req.flash("error", "Invalid username or password. Please try again.")
             return res.status(401).render('account/login', {
@@ -59,7 +72,13 @@ accountController.processLogin = async function(req, res){
             })
         }
     } catch (err) {
-        return new Error('Error logging in');
+        console.error('Error during login process: ', err);
+        req.flash("error", "Error logging in. Please try again.")
+        return res.status(500).render('account/login', {
+            title: 'Login',
+            nav,
+            errors: "Error logging in. Please try again."
+        });
     }
 }
 
@@ -96,6 +115,16 @@ accountController.registerAccount = async function(req, res){
             title: 'Registration',
             nav,
             errors: "Email already exists. Please try again."
+        })
+    }
+
+    const userNameExists = await accountModel.findUser(username)
+    if (userNameExists){
+        req.flash("error", "Username already exists. Please try again.")
+        return res.status(501).render('account/register', {
+            title: 'Registration',
+            nav,
+            errors: "Username already exists. Please try again."
         })
     }
 

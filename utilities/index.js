@@ -41,7 +41,7 @@ utilities.buildMediaGrid = function(mediaArray){
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
-            grid += `<h3>${media.title}</h3>`;
+            // grid += `<h3>${media.title}</h3>`;
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
@@ -53,7 +53,7 @@ utilities.buildMediaGrid = function(mediaArray){
             // } else if (media.mediaType === "link"){
             //     grid += `<a href='${media.link}'></a>`;
             } else if (media.mediaType === "website") {
-                grid += `<a href="${media.link}" target="_blank"></a>`;
+                grid += `<a href="${media.link}" target="_blank">${media.title}</a>`;
             // } else if (media.mediaType === "app") {
             //     grid += `<a href='${media.link}' </a>`;
             } else {

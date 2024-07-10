@@ -16,6 +16,7 @@ router.post(
     util.handleErrors(accountController.processLogin)
 );
 
+
 router.get('/logout', util.handleErrors(accountController.processLogout));
 
 router.get('/register', util.handleErrors(accountController.buildRegistration));
@@ -35,7 +36,6 @@ router.get('/edit', util.handleErrors(accountController.buildEditAccount));
 //     accountValidation.checkEditData,
 //     util.handleErrors(accountController.processEditAccount)
 // );
-
 
 
 module.exports = router;

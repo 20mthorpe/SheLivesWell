@@ -24,6 +24,8 @@ const wellnessRoute = require('./routes/wellnessRoute')
 const utilities = require('./utilities')
 const flash = require('connect-flash');
 
+//const jwt = require('jsonwebtoken');
+
 
 /* ***********************
 * Middleware

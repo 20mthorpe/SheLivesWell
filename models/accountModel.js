@@ -24,7 +24,7 @@ Find a user by username
 accountModel.findUser = async function(username){
     try{
         const db = mongodb.getDb();
-        const result = await db.db().collection('users').findOne({username});
+        const result = await db.db().collection('users').findOne({ username: username });
         return result;
     }
     catch(err){
