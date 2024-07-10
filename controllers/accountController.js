@@ -85,8 +85,12 @@ accountController.processLogin = async function(req, res){
 /* ***********************
 Process the logout
 *************************/
-
-
+accountController.processLogout = async function(req, res){
+    let nav = await util.getNav();
+    res.clearCookie('jwt');
+    req.flash("notice", "You have been logged out.")
+    res.redirect('/');
+}
 /* ***********************
 Deliver the register view
 *************************/
