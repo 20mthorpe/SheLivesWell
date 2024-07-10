@@ -34,7 +34,13 @@ img {
     box-sizing: border-box;
 }
 
-h1 {
+h1, h2, h3, h4, p {
+    margin: 1em;
+}
+
+a {
+    color: var(--dark-pink);
+    text-decoration: none;
     margin: 1em;
 }
 /* HEADER STYLING */
