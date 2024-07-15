@@ -2,6 +2,7 @@
     <h1>SheLivesWell</h1>
     <span>
       <%  if (locals.loggedin) {%>
+        <a href="/account">Welcome <%= user.fname %>!</a>
         <a href="/account/logout">Logout</a>
         <!-- <a href="/">Home</a> -->
         <img src="/images/logot.png" alt="logo">
@@ -13,7 +14,6 @@
         <% } %>
     </span>
     <!-- <div id="tools">
-            <a href="/account">Welcome <%# locals.user.fname %>!</a>
             <a title="Click to log out" href="/account/logout">Log Out</a>
             <a title="Click to log in" href="/account/login">Login</a>
     </div> -->
