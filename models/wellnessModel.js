@@ -39,7 +39,8 @@ async function getWellnessByCategory(category){
             link: media.link,
             category: media.category,
             mediaType: media.mediaType,
-            approved: media.approved
+            approved: media.approved,
+            embedLink: media.embedLink
         }));
         return mediaItems
         

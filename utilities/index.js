@@ -16,6 +16,9 @@ utilities.getNav = async function(){
     list += "<li><a href='/wellness/spiritual'>Spiritual</a></li>"
     list += "<li><a href='/wellness/financial'>Financial</a></li>"
     list += "<li><a href='/wellness/intellectual'>Intellectual</a></li>"
+    // if (favorites){
+    //     list += "<li><a href='/favorites'>Favorites</a></li>"
+    // }
     list += "</ul>"
     return list;
     // return [
@@ -41,27 +44,15 @@ utilities.buildMediaGrid = function(mediaArray){
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
-            // grid += `<h3>${media.title}</h3>`;
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
-                grid += `<a href='${media.link}' target="_blank">${media.title}</a>`
-                //grid += `<iframe src="${media.link}" title="YouTube video player" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-                //grid += `<video src='${media.link}' controls></video>`;
-                console.log(media)
+                grid += `<a href='${media.link}' target="_blank">${media.title}</a>`;
                 if (media.embedLink){
                     grid += `<iframe src="${media.embedLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
                 }
-            // } else if (media.mediaType === "audio"){
-            //     grid += `<audio src='${media.link}' controls></audio>`;
-            // } else if (media.mediaType === "document"){
-            //     grid += `<a href='${media.link}'></a>`;
-            // } else if (media.mediaType === "link"){
-            //     grid += `<a href='${media.link}'></a>`;
             } else if (media.mediaType === "website") {
                 grid += `<a href="${media.link}" target="_blank">${media.title}</a>`;
-            // } else if (media.mediaType === "app") {
-            //     grid += `<a href='${media.link}' </a>`;
             } else {
                 grid += `<p>Invalid media type</p>`;
             }
