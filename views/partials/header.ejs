@@ -1,19 +1,21 @@
 <header>
     <h1>SheLivesWell</h1>
     <span>
-        <a href="/account/login">Login</a>
-        <a href="/account/register">Register</a>
+      <%  if (locals.loggedin) {%>
+        <a href="/account/logout">Logout</a>
         <!-- <a href="/">Home</a> -->
         <img src="/images/logot.png" alt="logo">
+        <%} else { %>
+          <a href="/account/login">Login</a>
+          <a href="/account/register">Register</a>
+          <img src="/images/logot.png" alt="logo">
         <!-- <button id="menu-icon">🍔</button> -->
+        <% } %>
     </span>
     <!-- <div id="tools">
-        <%#  if (locals.loggedin) {%>
-            <a href="/account">Welcome <%# locals.accountData.account_firstname %>!</a>
+            <a href="/account">Welcome <%# locals.user.fname %>!</a>
             <a title="Click to log out" href="/account/logout">Log Out</a>
-          <%#} else { %>
             <a title="Click to log in" href="/account/login">Login</a>
-          <%# } %>
     </div> -->
 </header>
 <!-- <script src="/js/hamburger.js"></script> -->

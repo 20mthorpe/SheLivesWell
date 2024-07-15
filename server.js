@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const mongodb = require('./database/connect');
 //const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const baseController = require('./controllers/baseController');
 
@@ -34,6 +35,8 @@ app.use(static);
 app.use(express.json())
 app.use(flash())
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(utilities.checkJWTToken)
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

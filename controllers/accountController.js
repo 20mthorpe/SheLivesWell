@@ -52,16 +52,14 @@ accountController.processLogin = async function(req, res){
                 cookieOptions.secure = true;
             }
             res.cookie('jwt', accessToken, cookieOptions);
+            //console.log(req.cookies.jwt);
+            //util.setLoggedIn(true);
             return res.render('account/', {
                 title: 'Account',
                 nav,
                 user: user,
                 errors: null
             });
-            //console.log("I got through to this code!")
-            //req.session.user = user;
-            //req.flash("notice", `Welcome back, ${user.fname}!`)
-            //return res.status(200).redirect('account/index.ejs');
 
         } else {
             req.flash("error", "Invalid username or password. Please try again.")
@@ -88,7 +86,9 @@ Process the logout
 accountController.processLogout = async function(req, res){
     let nav = await util.getNav();
     res.clearCookie('jwt');
-    req.flash("notice", "You have been logged out.")
+    req.flash("notice", "You have been logged out.");
+    //localStorage.setItem('isLoggedIn', "false");
+    //util.setLoggedIn(false);
     res.redirect('/');
 }
 /* ***********************
@@ -153,7 +153,7 @@ accountController.registerAccount = async function(req, res){
     };
 
     try {
-        console.log(`user fname: ${user.fname}`);
+        //console.log(`user fname: ${user.fname}`);
 
         const regResult = await accountModel.registerUser(user)
 

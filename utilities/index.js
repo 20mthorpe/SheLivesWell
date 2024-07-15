@@ -1,4 +1,4 @@
-//const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
 
@@ -65,6 +65,39 @@ utilities.buildMediaGrid = function(mediaArray){
     }
     return grid;
 } 
+ 
+utilities.checkJWTToken = (req, res, next) => {
+    if (req.cookies.jwt) {
+        jwt.verify(
+         req.cookies.jwt,
+         process.env.ACCESS_TOKEN_SECRET,
+         function (err, user) {
+          if (err) {
+           req.flash("Please log in")
+           res.clearCookie("jwt")
+           return res.redirect("/account/login")
+          }
+          res.locals.user = user
+          res.locals.loggedin = 1
+          next()
+         })
+       } else {
+        next()
+       }
+    }
+
+// utilities.setLoggedIn = function(bool) {
+//     return function(req, res, next){
+//         if(bool === true){
+//             res.locals.loggedin = true;
+//             console.log(res.locals.loggedin);
+//         } else {
+//             res.locals.loggedin = false;
+//             console.log(res.locals.loggedin);
+//         }
+//         next();
+//     }
+// }
 
 
 module.exports = utilities;
