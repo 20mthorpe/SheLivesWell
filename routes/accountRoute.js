@@ -30,12 +30,12 @@ router.post(
 
 
 router.get('/edit', util.handleErrors(accountController.buildEditAccount));
-// router.post(
-//     '/edit', 
+router.post(
+     '/edit', 
 //     accountValidation.editRules(),
 //     accountValidation.checkEditData,
-//     util.handleErrors(accountController.processEditAccount)
-// );
+     util.handleErrors(accountController.processEditAccount)
+ );
 
 
 module.exports = router;

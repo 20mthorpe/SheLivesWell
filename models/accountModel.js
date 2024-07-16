@@ -1,7 +1,7 @@
 const mongodb = require('../database/connect.js');
 const { link } = require('../routes/static.js');
 const ObjectId = require('mongodb').ObjectId;
-
+const bcrypt = require('bcryptjs');
 const accountModel = {}
 
 /* ***********************
@@ -82,11 +82,23 @@ accountModel.findUserById = async function(id){
 /* ***********************
 Edit a user
 *************************/
-accountModel.editUser = async function(user){
+accountModel.editUser = async function(userId, updateData){
     try{
         const db = mongodb.getDb();
-        const result = await db.db().collection('users').updateOne({_id: ObjectId(user.id)}, {$set: user});
-        return result;
+        const userIdObj = new ObjectId(userId);
+
+        if (updateData.password) {
+            updateData.password_hash = await bcrypt.hash(updateData.password);
+            delete updateData.password;
+        }
+
+        const result = await db.db().collection('users').updateOne({_id: ObjectId(userId)}, {$set: updateData});
+
+        if (result.matchedCount === 0) {
+            throw new Error('User not found');
+        } else {
+            return result;
+        }
     }
     catch(err){
         console.log(err);

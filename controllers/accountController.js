@@ -213,6 +213,43 @@ accountController.buildEditAccount = async function(req, res) {
 /* ***********************
 process account update
 *************************/
+accountController.processEditAccount = async function(req, res) {
+    let nav = await util.getNav();
+    try {
+        const user = accountModel.findUser(req.body.username);
+        const userId = user._id;
+    
+        const updateData = {
+            fname: req.body.fname,
+            lname: req.body.lname,
+            username: req.body.username,
+            email: req.body.email,
+            //password_hash: req.body.password,
+        }
+    
+        if (req.body.password) {
+            updateData.password = req.body.password;
+        }
+    
+        const updateResult = await accountModel.editUser(userId, updateData);
+        res.render('account/', { 
+            title: 'Account',
+            nav,
+            errors: null
+         });
+    } catch (err) {
+        req.flash("error", "Error updating account. Please try again.")
+        return res.status(501).render('account/edit', {
+            title: 'Edit Account',
+            nav,
+            errors: "Error updating account. Please try again."
+        })
+    }
+
+    
+
+    
+}
 
 
 module.exports = accountController;
