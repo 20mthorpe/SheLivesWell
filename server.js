@@ -22,6 +22,7 @@ const expressLayouts = require("express-ejs-layouts")
 
 const accountRoute = require('./routes/accountRoute')
 const wellnessRoute = require('./routes/wellnessRoute')
+const likeRoute = require('./routes/likeRoute')
 const utilities = require('./utilities')
 const flash = require('connect-flash');
 

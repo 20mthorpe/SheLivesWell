@@ -445,3 +445,54 @@ footer a:hover {
     }
 }
 
+/* ACCOUNT PAGE STYLING */
+.account-page {
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.account-page h1 {
+    font-family: var(--heading-font);
+    color: var(--dark-pink);
+}
+
+.account-page p {
+    font-family: var(--body-font);
+    color: var(--med-pink);
+}
+
+.account-page a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--pink);
+    color: white;
+    border-radius: 5px;
+    font-family: var(--body-font);
+    transition: background-color 0.3s;
+}
+
+.account-page a:hover {
+    background-color: var(--dark-pink);
+}
+
+/* MEDIA QUERY FOR ACCOUNT PAGE */
+@media (max-width: 500px) {
+    .account-page {
+        padding: 15px;
+    }
+
+    .account-page h1 {
+        font-size: 1.5em;
+    }
+
+    .account-page a {
+        padding: 8px 15px;
+        /* font-size: 0.9rem; */
+    }
+}

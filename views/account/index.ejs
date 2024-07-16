@@ -5,9 +5,10 @@
 } %>
 
 <%# messages() %>
-
-<h1>You're Logged In</h1>
-
-<p>Welcome to your account page, <%= user.fname %></p>
-<a href="/account/edit">Update Account Info</a>
-<a href="/account/logout">Logout</a>
+<div class="account-page">
+    <h1>You're Logged In</h1>
+    
+    <p>Welcome to your account page, <%= user.fname %></p>
+    <a href="/account/edit" id="update-account">Update Account Info</a>
+    <a href="/account/logout" id="logout-account">Logout</a>
+</div>
