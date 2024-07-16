@@ -216,7 +216,8 @@ process account update
 accountController.processEditAccount = async function(req, res) {
     let nav = await util.getNav();
     try {
-        const user = accountModel.findUser(req.body.username);
+        const user = await accountModel.findUser(req.body.username);
+        console.log(user)
         const userId = user._id;
     
         const updateData = {
@@ -227,16 +228,17 @@ accountController.processEditAccount = async function(req, res) {
             //password_hash: req.body.password,
         }
     
-        if (req.body.password) {
-            updateData.password = req.body.password;
-        }
+        // if (req.body.password) {
+        //     updateData.password = req.body.password;
+        // }
     
         const updateResult = await accountModel.editUser(userId, updateData);
-        res.render('account/', { 
-            title: 'Account',
+        res.render('account/logout', { 
+            title: 'Logout',
             nav,
-            errors: null
+            errors: "Account updated successfully, please log in."
          });
+        return updateResult;
     } catch (err) {
         req.flash("error", "Error updating account. Please try again.")
         return res.status(501).render('account/edit', {

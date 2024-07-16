@@ -21,13 +21,12 @@ accountModel.registerUser = async function(user){
 /* ***********************
 Find a user by username
 *************************/
-accountModel.findUser = async function(username){
+accountModel.findUser = async function(uname){
     try{
         const db = mongodb.getDb();
-        const result = await db.db().collection('users').findOne({ username: username });
+        const result = await db.db().collection('users').findOne({ username: uname });
         return result;
-    }
-    catch(err){
+    } catch(err){
         console.log(err);
         throw new Error('error finding user');
     }
@@ -69,8 +68,7 @@ Find a user by ID
 accountModel.findUserById = async function(id){
     try{
         const db = mongodb.getDb();
-        const result = await db.db().collection('users').findOne({_id: ObjectId(id)
-        });
+        const result = await db.db().collection('users').findOne({_id: ObjectId(id)});
         return result;
     }
     catch(err){
@@ -92,7 +90,7 @@ accountModel.editUser = async function(userId, updateData){
             delete updateData.password;
         }
 
-        const result = await db.db().collection('users').updateOne({_id: ObjectId(userId)}, {$set: updateData});
+        const result = await db.db().collection('users').updateOne({_id: userIdObj}, {$set: updateData});
 
         if (result.matchedCount === 0) {
             throw new Error('User not found');

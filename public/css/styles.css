@@ -357,19 +357,20 @@ footer a:hover {
 .login-prompt {
     text-align: center;
     margin-top: 20px;
+    margin-bottom: 20px;
     font-family: var(--body-font);
 }
 
 .login-prompt p {
     margin: 10px 0;
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: var(--dark-pink);
 }
 
 .login-prompt a {
     color: var(--pink);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
     transition: color 0.3s;
 }

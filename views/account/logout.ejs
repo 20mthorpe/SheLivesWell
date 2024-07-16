@@ -1,0 +1,22 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/');
+} %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% if (Array.isArray(errors)) { %>
+            <% errors.forEach(function(error) { %>
+                <li><%= error.msg %></li>
+            <% }); %>
+        <% } else { %>
+            <li><%= errors %></li>
+        <% } %>
+    </ul>
+<% } %>
+
+<h1>You Have Successfully Logged Out</h1>
+<div class="login-prompt">
+    <a href="/account/login">Login Here</a>
+</div>
