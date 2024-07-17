@@ -11,7 +11,7 @@ require('dotenv').config();
 
 const utilities = {}
 
-utilities.getNav = async function(req, res){
+utilities.getNav = async function(user){
     let list = "<ul>"
     list += "<li><a href='/'>Home</a></li>"
     list += "<li><a href='/wellness/physical'>Physical</a></li>"
@@ -23,12 +23,12 @@ utilities.getNav = async function(req, res){
     // how do I get the user id here?
     //const user = ;
     
-    // if (user){
-    //     const liked = await wellnessModel.getLikedByUser(res.locals.user._id);
-    //     if (liked.length > 0) {
-    //         list += "<li><a href='/like'>Liked</a></li>"
-    //     }
-    // }
+    if (user){
+        const liked = await wellnessModel.getLikedByUser(user._id);
+        if (liked.length > 0) {
+            list += "<li><a href='/wellness/liked'>Liked</a></li>"
+        }
+    }
     
     // I only want to add something to the nav if a user is logged in and has liked something
 

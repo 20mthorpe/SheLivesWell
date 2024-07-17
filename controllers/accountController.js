@@ -14,7 +14,8 @@ dotenv.config();
 Deliver the login view
 *************************/
 accountController.buildLogin = async function(req, res){
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     res.render('account/login', { 
         title: 'Login',
         nav,
@@ -26,7 +27,8 @@ accountController.buildLogin = async function(req, res){
 Process the login form
 *************************/
 accountController.processLogin = async function(req, res){
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     const { username, password } = req.body;
     //console.log(`username: ${username}`);
     try {
@@ -56,12 +58,13 @@ accountController.processLogin = async function(req, res){
             //console.log(req.cookies.jwt);
             //util.setLoggedIn(true);
             //req.locals.loggedin = 1;
-            return res.render('account/', {
-                title: 'Account',
-                nav,
-                user: user,
-                errors: null
-            });
+            return res.redirect('/account');
+            // return res.render('account/', {
+            //     title: 'Account',
+            //     nav,
+            //     user: user,
+            //     errors: null
+            // });
 
         } else {
             req.flash("error", "Invalid username or password. Please try again.")
@@ -86,7 +89,8 @@ accountController.processLogin = async function(req, res){
 Process the logout
 *************************/
 accountController.processLogout = async function(req, res){
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     res.clearCookie('jwt');
     req.flash("notice", "You have been logged out.");
     //localStorage.setItem('isLoggedIn', "false");
@@ -97,7 +101,8 @@ accountController.processLogout = async function(req, res){
 Deliver the register view
 *************************/
 accountController.buildRegistration = async function(req, res){
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     res.render('account/register', { 
         title: 'Register',
         nav,
@@ -108,7 +113,8 @@ accountController.buildRegistration = async function(req, res){
 Process the registration form
 *************************/
 accountController.registerAccount = async function(req, res){
-    let nav = await util.getNav();
+    const navuser = res.locals.user;
+    let nav = await util.getNav(navuser);
     //let user;
     //console.log(req.body);
     const { fname, lname, username, email, password } = req.body;
@@ -192,7 +198,8 @@ accountController.registerAccount = async function(req, res){
 Deliver the account view
 *************************/
 accountController.buildAccount = async function(req, res) {
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     res.render('account/', { 
         title: 'Account',
         nav,
@@ -204,7 +211,8 @@ accountController.buildAccount = async function(req, res) {
 Deliver edit account view
 *************************/
 accountController.buildEditAccount = async function(req, res) {
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     res.render('account/edit', { 
         title: 'Edit Account',
         nav,
@@ -216,7 +224,8 @@ accountController.buildEditAccount = async function(req, res) {
 process account update
 *************************/
 accountController.processEditAccount = async function(req, res) {
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     try {
         const user = await accountModel.findUser(req.body.username);
         console.log(user)

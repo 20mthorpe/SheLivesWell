@@ -105,7 +105,8 @@ mongodb.initDb((err, db) => {
 * Express Error Handlers
 *************************/
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
+  const user = res.locals.user;
+  let nav = await utilities.getNav(user)
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   if(err.status == 404){
     message = err.message
@@ -120,7 +121,8 @@ app.use(async (err, req, res, next) => {
 })
 
 app.use(async(err, req, res, next) => {
-  let nav = await utilities.getNav()
+  const user = res.locals.user;
+  let nav = await utilities.getNav(user)
   console.error(`500 Error at: "${req.originalUrl}": ${err.message}`)
   res.status(500).render("errors/error", {
     title: '500 Internal Server Error',

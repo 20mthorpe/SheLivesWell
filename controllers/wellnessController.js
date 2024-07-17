@@ -16,7 +16,7 @@ These functions render the wellness pages.
 
 wellnessController.buildWellness = async function(req, res){
     const user = res.locals.user;
-    let nav = await util.getNav();
+    let nav = await util.getNav(user);
     const category = req.params.category;
     //console.log('category: ' + req.params.category)
     const category_data = await wellnessModel.getWellnessByCategory(category);
@@ -35,7 +35,8 @@ wellnessController.buildWellness = async function(req, res){
 }
 
 wellnessController.buildLikedPage = async function(req, res){
-    let nav = await util.getNav();
+    const user = res.locals.user;
+    let nav = await util.getNav(user);
     const user_id = res.locals.user._id;
     const liked_data = await wellnessModel.getLikedByUser(user_id);
     const isLoggedIn = res.locals.loggedin;
@@ -43,7 +44,7 @@ wellnessController.buildLikedPage = async function(req, res){
         res.redirect('/login', errors='You must be logged in to view liked items.');
     }
     const grid = util.buildMediaGrid(liked_data, isLoggedIn, user);
-    res.render('wellness/', { 
+    res.render('wellness/liked', { 
         title: 'Liked',
         nav,
         errors: null,

@@ -4,7 +4,7 @@ const baseController = {}
 baseController.buildHome = async function(req, res){
   const user = res.locals.user;
   //console.log(user);
-  const nav = await utilities.getNav();
+  const nav = await utilities.getNav(user);
   
   //let tools = await utilities.userTools()
   //req.flash("notice", "This is a flash message")
