@@ -20,7 +20,9 @@ wellnessController.buildWellness = async function(req, res){
     //console.log('category: ' + req.params.category)
     const category_data = await wellnessModel.getWellnessByCategory(category);
     //console.log(category_data)
-    const grid = util.buildMediaGrid(category_data);
+    const isLoggedIn = res.locals.loggedin;
+    console.log('isLoggedIn: ' + isLoggedIn)
+    const grid = util.buildMediaGrid(category_data, isLoggedIn);
 
     res.render('wellness/', { 
         title: category + ' wellness',

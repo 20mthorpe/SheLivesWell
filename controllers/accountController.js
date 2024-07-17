@@ -55,6 +55,7 @@ accountController.processLogin = async function(req, res){
             res.cookie('jwt', accessToken, cookieOptions);
             //console.log(req.cookies.jwt);
             //util.setLoggedIn(true);
+            //req.locals.loggedin = 1;
             return res.render('account/', {
                 title: 'Account',
                 nav,

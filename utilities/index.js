@@ -2,13 +2,14 @@ const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
 const likeModel = require('../models/likeModel');
+//const cookieParser = require('cookie-parser');
 
 //const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const utilities = {}
 
-utilities.getNav = async function(){
+utilities.getNav = async function(req, res){
     let list = "<ul>"
     list += "<li><a href='/'>Home</a></li>"
     list += "<li><a href='/wellness/physical'>Physical</a></li>"
@@ -17,10 +18,16 @@ utilities.getNav = async function(){
     list += "<li><a href='/wellness/spiritual'>Spiritual</a></li>"
     list += "<li><a href='/wellness/financial'>Financial</a></li>"
     list += "<li><a href='/wellness/intellectual'>Intellectual</a></li>"
-    const liked = await likeModel.getLikedByUser();
-    if (liked.length > 0) {
-        list += "<li><a href='/like'>Liked</a></li>"
-    }
+    
+    // I only want to add something to the nav if a user is logged in and has liked something
+
+    // if (req.cookies.jwt) {
+    //     const liked = await likeModel.getLikedByUser();
+    //     if (liked.length > 0) {
+    //         list += "<li><a href='/like'>Liked</a></li>"
+    //     }
+    // }
+
     // if (favorites){
     //     list += "<li><a href='/favorites'>Favorites</a></li>"
     // }
@@ -44,15 +51,19 @@ utilities.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, 
 /* ***********************
 Build Media Grid HTML
 *************************/
-utilities.buildMediaGrid = function(mediaArray){
+utilities.buildMediaGrid = function(mediaArray, isLoggedIn){
     let grid = "<div class='media-grid'>";
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
-            grid += `<button class='like-button' data-media-id='${media._id}'>♥`
+            // I only want the like button to appear if a user is logged in
+
+            if(isLoggedIn){
+                grid += `<button class='like-button' data-media-id='${media._id}'>♥`
+                grid += `</button>`;
+            }
             //grid += `<img src='/images/heart-icon.png' alt='heart icon' class='heart-icon height=20 width=20>`;
             //grid +=    `<i class='heart-icon ${media.isLiked ? "liked": ""}'></i>`
-            grid += `</button>`;
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
