@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 //const flash = require('connect-flash');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const e = require('connect-flash');
 dotenv.config();
 
 

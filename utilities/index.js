@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
+const likeModel = require('../models/likeModel');
 
 //const bcrypt = require('bcrypt');
 require('dotenv').config();
@@ -16,6 +17,10 @@ utilities.getNav = async function(){
     list += "<li><a href='/wellness/spiritual'>Spiritual</a></li>"
     list += "<li><a href='/wellness/financial'>Financial</a></li>"
     list += "<li><a href='/wellness/intellectual'>Intellectual</a></li>"
+    const liked = await likeModel.getLikedByUser();
+    if (liked.length > 0) {
+        list += "<li><a href='/like'>Liked</a></li>"
+    }
     // if (favorites){
     //     list += "<li><a href='/favorites'>Favorites</a></li>"
     // }
@@ -44,6 +49,10 @@ utilities.buildMediaGrid = function(mediaArray){
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
+            grid += `<button class='like-button' data-media-id='${media._id}'>♥`
+            //grid += `<img src='/images/heart-icon.png' alt='heart icon' class='heart-icon height=20 width=20>`;
+            //grid +=    `<i class='heart-icon ${media.isLiked ? "liked": ""}'></i>`
+            grid += `</button>`;
             if(media.mediaType === "image"){
                 grid += `<img src='${media.link}' alt='${media.description}' />`;
             } else if(media.mediaType === "video"){
@@ -64,7 +73,36 @@ utilities.buildMediaGrid = function(mediaArray){
         grid += "<p>No media found</p>";
     }
     return grid;
-} 
+}
+
+// utilities.buildLikedMediaGrid = function(mediaArray){
+//     let grid = "<div class='media-grid'>";
+//     if(mediaArray.length > 0){
+//         mediaArray.forEach(media => {
+//             grid += `<div class='media-item-card'>`;
+//             if(media.mediaType === "image"){
+//                 grid += `<img src='${media.link}' alt='${media.description}' />`;
+//             } else if(media.mediaType === "video"){
+//                 grid += `<a href='${media.link}' target="_blank">${media.title}</a>`;
+//                 if (media.embedLink){
+//                     grid += `<iframe src="${media.embedLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+//                 }
+//             } else if (media.mediaType === "website") {
+//                 grid += `<a href="${media.link}" target="_blank">${media.title}</a>`;
+//             } else {
+//                 grid += `<p>Invalid media type</p>`;
+//             }
+//             grid += `<p>${media.description}</p>`;
+//             grid += `</div>`;
+//         });
+//         grid += "</div>";
+//     } else {
+//         grid += "<p>No media found</p>";
+//     }
+//     return grid;
+// }
+
+
  
 utilities.checkJWTToken = (req, res, next) => {
     if (req.cookies.jwt) {

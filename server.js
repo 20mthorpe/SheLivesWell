@@ -69,6 +69,9 @@ app.use("/account", utilities.handleErrors(accountRoute));
 // wellness routes
 app.use("/wellness", utilities.handleErrors(wellnessRoute));
 
+// like routes
+app.use("/like", utilities.handleErrors(likeRoute));
+
 // file not found route
 app.use(async (req, res, next) =>{
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
