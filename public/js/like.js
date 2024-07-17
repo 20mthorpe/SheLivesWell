@@ -11,13 +11,24 @@ likeButtons.forEach(button => {
         //console.log('clicked');
         // Here you can add the code to send the like status to the server
         const mediaId = clickedButton.getAttribute('data-media-id');
-        fetch(`/wellness/:${mediaId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ mediaId })
-        })
+        const userId = clickedButton.getAttribute('data-user-id');
+        if (clickedButton.classList.contains('liked')) {
+            fetch(`/wellness/:${mediaId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ mediaId, userId })
+            })
+        } else {
+            fetch(`/wellness/:${mediaId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ mediaId, userId })
+            })
+        }
         //return mediaId;
     });
 });

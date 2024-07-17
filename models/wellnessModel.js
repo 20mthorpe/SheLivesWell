@@ -1,3 +1,4 @@
+const { get } = require('mongoose');
 const mongodb = require('../database/connect.js');
 const { link } = require('../routes/static.js');
 const ObjectId = require('mongodb').ObjectId;
@@ -69,8 +70,23 @@ async function getWellnessByCategory(category){
 wellnessModel.addUserToLiked = async function(mediaId, userId){
     try{
         const db = mongodb.getDb();
-        const userIdObj = new ObjectId(userId);
-        const result = await db.db().collection('wellness').updateOne({_id: mediaId}, {$push: {usersLiked: userIdObj}});
+        //const userIdObj = new ObjectId(userId);
+        const mediaIdObj = new ObjectId(mediaId);
+        const result = await db.db().collection('wellness').updateOne({_id: mediaIdObj}, {$push: {usersLiked: userId}});
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error adding user to liked list');
+    }
+}
+
+async function addUserToLiked(mediaId, userId){
+    try{
+        const db = mongodb.getDb();
+        const mediaIdObj = new ObjectId(mediaId);
+        //const userIdObj = new ObjectId(userId);
+        console.log("mediaidobj: ", mediaIdObj, "userid: ", userId);
+        const result = await db.db().collection('wellness').updateOne({_id: mediaIdObj}, {$push: {usersLiked: userId}});
         return result;
     } catch (err) {
         console.log(err);
@@ -95,12 +111,26 @@ wellnessModel.checkIfLiked = async function(mediaId, userId){
 wellnessModel.getLikedByUser = async function(userId){
     try{
         const db = mongodb.getDb();
+        //const userId = req.params.userId;
         const result = await db.db().collection('wellness').find({usersLiked: userId}).toArray();
         return result;
     } catch (err) {
         console.log(err);
         throw new Error('error getting liked media');
     }
+}
+
+async function getLikedByUser(userId){
+   
+        try{
+            const db = mongodb.getDb();
+            const result = await db.db().collection('wellness').find({usersLiked: userId}).toArray();
+            return result;
+        } catch (err) {
+            console.log(err);
+            throw new Error('error getting liked media');
+        }
+    
 }
 
 // /* POST new wellness data */
@@ -142,4 +172,4 @@ wellnessModel.getLikedByUser = async function(userId){
 //     }
 // }
 
-module.exports =  {wellnessModel, getWellnessByCategory};
+module.exports =  {wellnessModel, getWellnessByCategory, getLikedByUser, addUserToLiked};

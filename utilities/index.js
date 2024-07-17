@@ -78,7 +78,7 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
                     usersLiked = [];
                 }
                 if(usersLiked.includes(user._id)){
-                    grid += `<button class='like-button liked' data-media-id='${media._id}'>♥</button>`;
+                    grid += `<button class='like-button liked' data-media-id='${media._id}' data-user-id='${user._id}'>♥</button>`;
                 
                 //console.log(isLiked);
                 //if(isLiked){
