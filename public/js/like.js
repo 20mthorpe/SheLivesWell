@@ -13,7 +13,7 @@ likeButtons.forEach(button => {
         const mediaId = clickedButton.getAttribute('data-media-id');
         const userId = clickedButton.getAttribute('data-user-id');
         if (clickedButton.classList.contains('liked')) {
-            fetch(`/wellness/:${mediaId}`, {
+            fetch(`/wellness/like/:${mediaId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ likeButtons.forEach(button => {
                 body: JSON.stringify({ mediaId, userId })
             })
         } else {
-            fetch(`/wellness/:${mediaId}`, {
+            fetch(`/wellness/unlike/:${mediaId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

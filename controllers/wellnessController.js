@@ -40,7 +40,7 @@ wellnessController.buildLikedPage = async function(req, res){
     const user_id = user._id;
     //console.log(user_id);
     const liked_data = await wellnessModel.getLikedByUser(user_id);
-    console.log(liked_data);
+    //console.log(liked_data);
     const isLoggedIn = res.locals.loggedin;
     if (!isLoggedIn) {
         res.redirect('/login');
@@ -227,7 +227,10 @@ Remove user from liked
 wellnessController.removeUserFromLiked = async function(req, res){
     const user = res.locals.user;
     const user_id = user._id;
-    const media_id = req.params.mediaId;
+    let media_id = req.params.mediaId;
+    media_id = media_id.slice(1);
+
+    const removeUser = await wellnessModel.removeUserFromLiked(media_id, user_id);
     // try{
     //     const db = mongodb.getDb();
     //     const user_idObj = new ObjectId(user_id);
@@ -239,6 +242,22 @@ wellnessController.removeUserFromLiked = async function(req, res){
     //     console.log(err);
     //     res.status(500).send('error unliking media');
     // }
+}
+
+/* ***********************
+Handle Like
+*************************/
+wellnessController.handleLike = async function(req, res){
+    const user = res.locals.user;
+    const user_id = user._id;
+    let media_id = req.params.mediaId;
+    media_id = media_id.slice(1);
+    const mediaLiked = await wellnessModel.checkIfLiked(media_id, user_id);
+    if (mediaLiked){
+        wellnessController.removeUserFromLiked(media_id, user_id);
+    } else {
+        wellnessController.addUserToLiked(media_id, user_id);
+    }
 }
 
 module.exports = wellnessController;

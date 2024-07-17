@@ -107,6 +107,18 @@ wellnessModel.checkIfLiked = async function(mediaId, userId){
     }
 }
 
+async function checkIfLiked(mediaId, userId){
+    try{
+        const db = mongodb.getDb();
+        //const userIdObj = new ObjectId(userId);
+        const result = await db.db().collection('wellness').findOne({_id: mediaId, usersLiked: userId});
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error checking if user liked media');
+    }
+}
+
 /* Get all the media items that a user has liked */
 wellnessModel.getLikedByUser = async function(userId){
     try{
@@ -131,6 +143,19 @@ async function getLikedByUser(userId){
             throw new Error('error getting liked media');
         }
     
+}
+
+async function removeUserFromLiked(mediaId, userId){
+    try{
+        const db = mongodb.getDb();
+        const mediaIdObj = new ObjectId(mediaId);
+        //const userIdObj = new ObjectId(userId);
+        const result = await db.db().collection('wellness').updateOne({_id: mediaIdObj}, {$pull: {usersLiked: userId}});
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error removing user from liked list');
+    }
 }
 
 // /* POST new wellness data */
@@ -172,4 +197,4 @@ async function getLikedByUser(userId){
 //     }
 // }
 
-module.exports =  {wellnessModel, getWellnessByCategory, getLikedByUser, addUserToLiked};
+module.exports =  {wellnessModel, getWellnessByCategory, getLikedByUser, addUserToLiked, removeUserFromLiked, checkIfLiked};

@@ -33,8 +33,9 @@ router.get('/wellnessdata',
     util.handleErrors(wellnessController.getWellness)
 );
 
-router.put('/:mediaId', util.handleErrors(wellnessController.addUserToLiked));
-router.put('/:mediaId', util.handleErrors(wellnessController.removeUserFromLiked));
+
+router.put('/like/:mediaId', util.handleErrors(wellnessController.addUserToLiked));
+router.put('/unlike/:mediaId', util.handleErrors(wellnessController.removeUserFromLiked));
 // Get wellness data by id
 // router.get('/wellnessdata/:id',
 //     util.handleErrors(wellnessController.getWellnessById)
