@@ -1,68 +1,72 @@
-const mongodb = require('../database/connect.js');
-//const { link } = require('../routes/static.js');
-const ObjectId = require('mongodb').ObjectId;
-//const bcrypt = require('bcryptjs');
-const likeModel = {}
-const wellnessModel = require('./wellnessModel');
+// const mongodb = require('../database/connect.js');
+// //const { link } = require('../routes/static.js');
+// const ObjectId = require('mongodb').ObjectId;
+// //const bcrypt = require('bcryptjs');
+// const likeModel = {}
+// const wellnessModel = require('./wellnessModel');
 
-/* ***********************
-Like a media item
-*************************/
-likeModel.likeMedia = async function(media_id){
-    try{
-        const db = mongodb.getDb();
-        // I need to get the media_id when the user clicks the like button. I'm not sure how to do that.
-        // FIX THIS
-        const media = await wellnessModel.getWellnessById(media_id);
-        const result = await db.db().collection('likes').insertOne(media);
-        return result;
-    } catch (err) {
-        console.log(err);
-        throw new Error('error liking media');
-    }
-}
+// /* ***********************
+// Like a media item
+// *************************/
+// likeModel.likeMedia = async function(media_id, user_id){
+//     try{
+//         const db = mongodb.getDb();
 
-/* ***********************
-Get all liked media items
-*************************/
-likeModel.getLikedByUser = async function(req, res, next){
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('likes').find({user_id: req.params.user_id}).toArray();
-        return result;
-    } catch (err) {
-        console.log(err);
-        throw new Error('error getting liked media');
-    }
-}
+//         const user_idObj = new ObjectId(user_id);
+//         //const media_idObj = new ObjectId(media_id);
+//         const result = await db.db().collection('likes').insertOne({media_id: media_id, user_id: user_idObj});
+//         return result;
+//     } catch (err) {
+//         console.log(err);
+//         throw new Error('error liking media');
+//     }
+// }
 
-/* ***********************
-Unlike a media item
-*************************/
-likeModel.unlikeMedia = async function(req, res){
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('likes').deleteOne({user_id: req.params.user_id, media_id: req.params.media_id});
-        return result;
-    } catch (err) {
-        console.log(err);
-        throw new Error('error unliking media');
-    }
-}
+// /* ***********************
+// Get all liked media items
+// *************************/
+// likeModel.getLikedByUser = async function(userId){
+//     try{
+//         const db = mongodb.getDb();
+//         const userIdObj = new ObjectId(userId);
+//         const result = await db.db().collection('likes').find({user_id: userIdObj}).toArray();
+//         return result;
+//     } catch (err) {
+//         console.log(err);
+//         throw new Error('error getting liked media');
+//     }
+// }
 
-/* ***********************
-Check if a media item is liked
-*************************/
-likeModel.checkIfLiked = async function(media_id, user_id){
-    try{
-        const db = mongodb.getDb();
-        const result = await db.db().collection('likes').findOne({user_id: user_id, media_id: media_id});
-        return result;
-    } catch (err) {
-        console.log(err);
-        throw new Error('error checking if media is liked');
-    }
-}
+// /* ***********************
+// Unlike a media item
+// *************************/
+// likeModel.unlikeMedia = async function(likedId){
+//     try{
+//         const db = mongodb.getDb();
+//         const likedIdObj = new ObjectId(likedId);
+//         const result = await db.db().collection('likes').deleteOne({_id: likedIdObj});
+//         return result;
+//     } catch (err) {
+//         console.log(err);
+//         throw new Error('error unliking media');
+//     }
+// }
+
+// /* ***********************
+// Check if a media item is liked
+// *************************/
+// likeModel.checkIfLiked = async function(media_id, user_id){
+//     try{
+//         const db = mongodb.getDb();
+//         const media_idObj = new ObjectId(media_id);
+//         const user_idObj = new ObjectId(user_id);
+//         const result = await db.db().collection('likes').findOne({user_id: user_idObj, media_id: media_idObj});
+//         return result;
+//     } catch (err) {
+//         console.log(err);
+//         throw new Error('error checking if media is liked');
+//     }
+// }
 
 
-module.exports = likeModel
+// module.exports = likeModel

@@ -22,7 +22,7 @@ const expressLayouts = require("express-ejs-layouts")
 
 const accountRoute = require('./routes/accountRoute')
 const wellnessRoute = require('./routes/wellnessRoute')
-const likeRoute = require('./routes/likeRoute')
+//const likeRoute = require('./routes/likeRoute')
 const utilities = require('./utilities')
 const flash = require('connect-flash');
 
@@ -70,7 +70,7 @@ app.use("/account", utilities.handleErrors(accountRoute));
 app.use("/wellness", utilities.handleErrors(wellnessRoute));
 
 // like routes
-app.use("/like", utilities.handleErrors(likeRoute));
+//app.use("/like", utilities.handleErrors(likeRoute));
 
 // file not found route
 app.use(async (req, res, next) =>{

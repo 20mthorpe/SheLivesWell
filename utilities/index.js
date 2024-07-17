@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
-const likeModel = require('../models/likeModel');
+//const likeModel = require('../models/likeModel');
 
 //const cookieParser = require('cookie-parser');
 
@@ -53,14 +53,15 @@ utilities.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, 
 Build Media Grid HTML
 *************************/
 utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
+    //console.log(user);
     let grid = "<div class='media-grid'>";
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
             // I only want the like button to appear if a user is logged in
-
+            console.log(media)
             if(isLoggedIn){
-                const isLiked = likeModel.checkIfLiked(media._id, user._id);
+                const isLiked = false//likeModel.checkIfLiked(media._id, user._id);
                 if(isLiked){
                     grid += `<button class='like-button liked' data-media-id='${media._id}'>♥</button>`;
                 } else {
@@ -87,35 +88,35 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
         });
         grid += "</div>";
         if (isLoggedIn){
-            //grid += `<script src='/js/like.js'></script>`;
-            grid += `<script>document.querySelectorAll('.like-button').forEach(button => {
-                    button.addEventListener('click', async function() {
-                        const mediaId = this.getAttribute('data-media-id');
-                        if (this.classList.contains('liked')) {
-                            this.classList.remove('liked');
-                        } else {
-                            this.classList.add('liked');
-                        }
+            grid += `<script src='/js/like.js'></script>`;
+            // grid += `<script>document.querySelectorAll('.like-button').forEach(button => {
+            //         button.addEventListener('click', async function() {
+            //             const mediaId = this.getAttribute('data-media-id');
+            //             if (this.classList.contains('liked')) {
+            //                 this.classList.remove('liked');
+            //             } else {
+            //                 this.classList.add('liked');
+            //             }
 
-                        try {
-                            const response = await fetch('/like', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ mediaId })
-                            });
-                            if (response.ok) {
-                                // Handle successful like, e.g., change button color or icon
-                                this.classList.add('liked');
-                            } else {
-                                console.error('Failed to like media.');
-                            }
-                        } catch (error) {
-                            console.error('Error:', error);
-                        }
-                    });
-                });</script>`
+            //             try {
+            //                 const response = await fetch('/like', {
+            //                     method: 'POST',
+            //                     headers: {
+            //                         'Content-Type': 'application/json'
+            //                     },
+            //                     body: JSON.stringify({ mediaId })
+            //                 });
+            //                 if (response.ok) {
+            //                     // Handle successful like, e.g., change button color or icon
+            //                     this.classList.add('liked');
+            //                 } else {
+            //                     console.error('Failed to like media.');
+            //                 }
+            //             } catch (error) {
+            //                 console.error('Error:', error);
+            //             }
+            //         });
+            //     });</script>`
         }
     } else {
         grid += "<p>No media found</p>";

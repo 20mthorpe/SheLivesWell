@@ -46,10 +46,10 @@ router.get('/wellnessdata/:category',
 //     util.handleErrors(wellnessController.postWellness)
 // );
 
-// // Put (update) wellness data
-// router.put('/wellnessdata/:id',
-//     util.handleErrors(wellnessController.putWellness)
-// );
+//Put (update) wellness data
+router.put('/wellnessdata/:id',
+     util.handleErrors(wellnessController.putWellness)
+ );
 
 // // Delete wellness data
 // router.delete('/wellnessdata/:id',

@@ -33,7 +33,7 @@ async function getWellnessByCategory(category){
         const db = mongodb.getDb();
         const result = await db.db().collection('wellness').find({category}).toArray();
         const mediaItems = result.map(media => ({
-            id: media._id,
+            _id: media._id,
             title: media.title,
             description: media.description,
             link: media.link,

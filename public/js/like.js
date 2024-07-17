@@ -1,30 +1,30 @@
-const likeModel = require("../../models/likeModel");
+
+// Select all like buttons
 const likeButtons = document.querySelectorAll('.like-button');
 
-document.addEventListener(function() {
 
-    likeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const heartButton = document.querySelector('.heart-button');
-            heartButton.classList.toggle('liked');
-            console.log('clicked');
+// Loop through each button and add event listener
+likeButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        const clickedButton = event.target;
+        clickedButton.classList.toggle('liked');
+        //console.log('clicked');
+        // Here you can add the code to send the like status to the server
+        const mediaId = clickedButton.getAttribute('data-media-id');
+        fetch(`/wellness/:${mediaId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ mediaId })
+        })
+        //return mediaId;
+    });
+});
 
-            // Here you can add the code to send the like status to the server
-            const mediaId = document.getAttribute('data-media-id');
-            const isLiked = heartButton.classList.contains('liked');
-
-            if (!isLiked) {
-                heartButton.classList.add('liked');
-                likeModel.likeMedia(mediaId);
-                return mediaId;
-            } else {
-                heartButton.classList.remove('liked');
-                likeModel.unlikeMedia(mediaId);
-                return mediaId;
-            }
 
             //const isLiked = heartButton.classList.contains('liked');
-            // Send AJAX request to update the like status in the database
+            // 
             // Example:
             // fetch('/like', {
             //     method: 'POST',
@@ -33,6 +33,6 @@ document.addEventListener(function() {
             //     },
             //     body: JSON.stringify({ mediaId, isLiked })
             // });
-        });
-    });
-});
+        
+    //});
+//});
