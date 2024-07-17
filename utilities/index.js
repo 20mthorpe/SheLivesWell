@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
 const likeModel = require('../models/likeModel');
+
 //const cookieParser = require('cookie-parser');
 
 //const bcrypt = require('bcrypt');
@@ -51,7 +52,7 @@ utilities.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, 
 /* ***********************
 Build Media Grid HTML
 *************************/
-utilities.buildMediaGrid = function(mediaArray, isLoggedIn){
+utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
     let grid = "<div class='media-grid'>";
     if(mediaArray.length > 0){
         mediaArray.forEach(media => {
@@ -59,8 +60,13 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn){
             // I only want the like button to appear if a user is logged in
 
             if(isLoggedIn){
-                grid += `<button class='like-button' data-media-id='${media._id}'>♥`
-                grid += `</button>`;
+                const isLiked = likeModel.checkIfLiked(media._id, user._id);
+                if(isLiked){
+                    grid += `<button class='like-button liked' data-media-id='${media._id}'>♥</button>`;
+                } else {
+                    grid += `<button class='like-button' data-media-id='${media._id}'>♥</button>`;
+                    //console.log(user._id);
+                }
             }
             //grid += `<img src='/images/heart-icon.png' alt='heart icon' class='heart-icon height=20 width=20>`;
             //grid +=    `<i class='heart-icon ${media.isLiked ? "liked": ""}'></i>`
@@ -80,6 +86,37 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn){
             grid += `</div>`;
         });
         grid += "</div>";
+        if (isLoggedIn){
+            //grid += `<script src='/js/like.js'></script>`;
+            grid += `<script>document.querySelectorAll('.like-button').forEach(button => {
+                    button.addEventListener('click', async function() {
+                        const mediaId = this.getAttribute('data-media-id');
+                        if (this.classList.contains('liked')) {
+                            this.classList.remove('liked');
+                        } else {
+                            this.classList.add('liked');
+                        }
+
+                        try {
+                            const response = await fetch('/like', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ mediaId })
+                            });
+                            if (response.ok) {
+                                // Handle successful like, e.g., change button color or icon
+                                this.classList.add('liked');
+                            } else {
+                                console.error('Failed to like media.');
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                });</script>`
+        }
     } else {
         grid += "<p>No media found</p>";
     }

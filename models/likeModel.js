@@ -50,5 +50,19 @@ likeModel.unlikeMedia = async function(req, res){
     }
 }
 
+/* ***********************
+Check if a media item is liked
+*************************/
+likeModel.checkIfLiked = async function(media_id, user_id){
+    try{
+        const db = mongodb.getDb();
+        const result = await db.db().collection('likes').findOne({user_id: user_id, media_id: media_id});
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error checking if media is liked');
+    }
+}
+
 
 module.exports = likeModel

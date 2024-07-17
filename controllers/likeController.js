@@ -20,10 +20,12 @@ likeController.buildLikedPage = async function(req, res){
 
 likeController.processLike = async function(req, res){
     let nav = await util.getNav();
-    const user_id = res.locals.user._id;
 
+    // I think all these variables are invalid or undefined
+    const user_id = res.locals.user._id;
     const media_id = req.body.media_id;
     const liked = req.body.liked;
+
     const like = await likeModel.likeMedia(user_id, media_id, liked);
     if (like) {
         req.flash("notice", "Like updated.")

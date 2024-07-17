@@ -92,8 +92,8 @@ nav {
 }
 
 nav ul li:hover {
-    background-color: white;
-    color: var(--dark-pink);
+    /* background-color: white; */
+    /* color: var(--light-pink); */
     border-radius: 10px;
 }
 
@@ -110,6 +110,12 @@ nav ul li a {
     padding: 10px 15px;
 }
 
+nav ul li a:hover {
+    /* text-decoration: none; */
+    color: var(--pink);
+    /* padding: 10px 15px; */
+}
+
 .menu-icon {
     display: none;
     font-size: 2em;
@@ -119,13 +125,15 @@ nav ul li a {
 
 /* MEDIA STYLING */
 
-@media (max-width: 500px) {
+@media (max-width: 1000px) {
 
     /* NAV */
     nav ul {
-        display: none;
+        /* display: none; */
         flex-direction: column;
         width: 100%;
+        margin: 0 auto;
+        padding: 0;
     }
 
     nav ul.show {
@@ -142,11 +150,14 @@ nav ul li a {
         text-align: center;
     }
 
-    nav ul li a {
+    nav ul li {
         display: block;
         width: 100%;
-        padding: 15px;
+        /* padding: 15px; */
         border-top: 1px solid var(--med-pink);
+    }
+    nav ul li:nth-child(1) {
+        border-top: none;
     }
     /* HEADER */
     header {
@@ -508,6 +519,7 @@ footer a:hover {
     border: none;
     cursor: pointer;
     padding: 5px;
+    border-radius: 10px;
     /* border: 2px solid var(--light-pink); */
 }
 
@@ -516,7 +528,7 @@ footer a:hover {
 }
 
 .like-button.liked {
-    background-color: var(--dark-pink);
+    background-color: var(--light-pink);
 }
 
 /* .heart-icon {
