@@ -32,9 +32,9 @@ router.get('/wellnessdata',
 );
 
 // Get wellness data by id
-router.get('/wellnessdata/:id',
-    util.handleErrors(wellnessController.getWellnessById)
-);
+// router.get('/wellnessdata/:id',
+//     util.handleErrors(wellnessController.getWellnessById)
+// );
 
 // Get wellness data by category
 router.get('/wellnessdata/:category',
@@ -47,9 +47,9 @@ router.get('/wellnessdata/:category',
 // );
 
 //Put (update) wellness data
-router.put('/wellnessdata/:id',
-     util.handleErrors(wellnessController.putWellness)
- );
+// router.put('/wellnessdata/:id',
+//     util.handleErrors(wellnessController.addUserToLiked)
+// );
 
 // // Delete wellness data
 // router.delete('/wellnessdata/:id',

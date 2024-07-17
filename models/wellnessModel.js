@@ -40,7 +40,8 @@ async function getWellnessByCategory(category){
             category: media.category,
             mediaType: media.mediaType,
             approved: media.approved,
-            embedLink: media.embedLink
+            embedLink: media.embedLink,
+            usersLiked: media.usersLiked
         }));
         return mediaItems
         
@@ -52,15 +53,53 @@ async function getWellnessByCategory(category){
 
 
 /* GET wellness data by ID */
-wellnessModel.getWellnessById = async function(req, res, next){
+// wellnessModel.getWellnessById = async function(req, res, next){
+//     try{
+//         const db = mongodb.getDb();
+//         const result = await db.db().collection('wellness').findOne({_id: ObjectId(req.params.id)});
+//         res.setHeader('Content-Type', 'application/json');
+//         res.status(200).json(result);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).send('error getting wellness data');
+//     }
+// }
+
+/* Add a user to the list of users who have liked a media item */
+wellnessModel.addUserToLiked = async function(mediaId, userId){
     try{
         const db = mongodb.getDb();
-        const result = await db.db().collection('wellness').findOne({_id: ObjectId(req.params.id)});
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(result);
+        const userIdObj = new ObjectId(userId);
+        const result = await db.db().collection('wellness').updateOne({_id: mediaId}, {$push: {usersLiked: userIdObj}});
+        return result;
     } catch (err) {
         console.log(err);
-        res.status(500).send('error getting wellness data');
+        throw new Error('error adding user to liked list');
+    }
+}
+
+/* Check if a user has liked a media item */
+wellnessModel.checkIfLiked = async function(mediaId, userId){
+    try{
+        const db = mongodb.getDb();
+        const userIdObj = new ObjectId(userId);
+        const result = await db.db().collection('wellness').findOne({_id: mediaId, usersLiked: userIdObj});
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error checking if user liked media');
+    }
+}
+
+/* Get all the media items that a user has liked */
+wellnessModel.getLikedByUser = async function(userId){
+    try{
+        const db = mongodb.getDb();
+        const result = await db.db().collection('wellness').find({usersLiked: userId}).toArray();
+        return result;
+    } catch (err) {
+        console.log(err);
+        throw new Error('error getting liked media');
     }
 }
 

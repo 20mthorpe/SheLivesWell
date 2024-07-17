@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { name } = require('ejs');
+const { wellnessModel } = require('../models/wellnessModel');
 //const likeModel = require('../models/likeModel');
 
 //const cookieParser = require('cookie-parser');
@@ -19,6 +20,15 @@ utilities.getNav = async function(req, res){
     list += "<li><a href='/wellness/spiritual'>Spiritual</a></li>"
     list += "<li><a href='/wellness/financial'>Financial</a></li>"
     list += "<li><a href='/wellness/intellectual'>Intellectual</a></li>"
+    // how do I get the user id here?
+    //const user = ;
+    
+    // if (user){
+    //     const liked = await wellnessModel.getLikedByUser(res.locals.user._id);
+    //     if (liked.length > 0) {
+    //         list += "<li><a href='/like'>Liked</a></li>"
+    //     }
+    // }
     
     // I only want to add something to the nav if a user is logged in and has liked something
 
@@ -59,11 +69,20 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
         mediaArray.forEach(media => {
             grid += `<div class='media-item-card'>`;
             // I only want the like button to appear if a user is logged in
-            console.log(media)
+            //console.log(media)
             if(isLoggedIn){
-                const isLiked = false//likeModel.checkIfLiked(media._id, user._id);
-                if(isLiked){
+                //console.log(user);
+                //console.log(media.usersLiked);
+                let usersLiked = media.usersLiked;
+                if (usersLiked === undefined) {
+                    usersLiked = [];
+                }
+                if(usersLiked.includes(user._id)){
                     grid += `<button class='like-button liked' data-media-id='${media._id}'>♥</button>`;
+                
+                //console.log(isLiked);
+                //if(isLiked){
+                    //grid += `<button class='like-button liked' data-media-id='${media._id}'>♥</button>`;
                 } else {
                     grid += `<button class='like-button' data-media-id='${media._id}'>♥</button>`;
                     //console.log(user._id);
@@ -89,34 +108,6 @@ utilities.buildMediaGrid = function(mediaArray, isLoggedIn, user){
         grid += "</div>";
         if (isLoggedIn){
             grid += `<script src='/js/like.js'></script>`;
-            // grid += `<script>document.querySelectorAll('.like-button').forEach(button => {
-            //         button.addEventListener('click', async function() {
-            //             const mediaId = this.getAttribute('data-media-id');
-            //             if (this.classList.contains('liked')) {
-            //                 this.classList.remove('liked');
-            //             } else {
-            //                 this.classList.add('liked');
-            //             }
-
-            //             try {
-            //                 const response = await fetch('/like', {
-            //                     method: 'POST',
-            //                     headers: {
-            //                         'Content-Type': 'application/json'
-            //                     },
-            //                     body: JSON.stringify({ mediaId })
-            //                 });
-            //                 if (response.ok) {
-            //                     // Handle successful like, e.g., change button color or icon
-            //                     this.classList.add('liked');
-            //                 } else {
-            //                     console.error('Failed to like media.');
-            //                 }
-            //             } catch (error) {
-            //                 console.error('Error:', error);
-            //             }
-            //         });
-            //     });</script>`
         }
     } else {
         grid += "<p>No media found</p>";
