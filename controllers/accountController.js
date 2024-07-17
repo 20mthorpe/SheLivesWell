@@ -227,8 +227,8 @@ accountController.processEditAccount = async function(req, res) {
     const user = res.locals.user;
     let nav = await util.getNav(user);
     try {
-        const user = await accountModel.findUser(req.body.username);
-        console.log(user)
+        //const user = await accountModel.findUser(req.body.username);
+        //console.log(user)
         const userId = user._id;
     
         const updateData = {

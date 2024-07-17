@@ -25,9 +25,9 @@ wellnessController.buildWellness = async function(req, res){
     //console.log('user: ' + user)
     //console.log('isLoggedIn: ' + isLoggedIn)
     const grid = util.buildMediaGrid(category_data, isLoggedIn, user);
-
+    const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
     res.render('wellness/', { 
-        title: category + ' wellness',
+        title: categoryTitle + ' Wellness',
         nav,
         errors: null,
         grid,
